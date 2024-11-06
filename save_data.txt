@@ -1,0 +1,4 @@
+Name: kim
+Health: 0
+AttackDamage: 10
+Armor: 5
