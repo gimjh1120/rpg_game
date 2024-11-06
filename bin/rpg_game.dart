@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'game_class.dart';
 
+//저장된 게임 결과 불러오기
 void loadGame() {
   File resultFile = File('result.txt');
   if (resultFile.existsSync()) {
@@ -16,12 +17,15 @@ void loadGame() {
 void main() {
   print('콘솔 RPG 게임을 시작합니다!');
   try {
+    //텍스트 파일의 캐릭터, 몬스터 정보 불러오기
     String characterFile = 'characters.txt';
     String monsterFile = 'monsters.txt';
+
+    //게임 클래스에 불러온 정보 넣기
     Game game = Game.fromFiles(characterFile, monsterFile);
     game.gameStart();
 
-    print('게임 정보를 불러오려면 Enter 키를 누르세요.');
+    print('게임 결과를 불러오려면 Enter 키를 누르세요.');
     stdin.readLineSync();
     loadGame();
   } catch (e) {

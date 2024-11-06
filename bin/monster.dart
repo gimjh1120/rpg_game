@@ -16,7 +16,9 @@ class Monsters {
 
   void attackCharacter(Characters character) {
     if (!character.armorDefend) {
-      int damage = max(0, attackDamage - character.armor);
+      int maxDamage = max(attackDamage, character.armor + 1);
+      int damagePercent = Random().nextInt(21) + 80;
+      int damage = (maxDamage * (damagePercent / 100)).round();
       character.health = max(0, character.health - damage);
       print('${character.name}이(가) $name에게 $damage의 피해를 입었습니다.');
     }
