@@ -124,6 +124,7 @@ class Game {
           '${character.name} - 체력: ${character.health} | 공격력: ${character.attackDamage} | 방어력: ${character.armor}');
 
       //처치한 몬스터보다 몬스터 리스트 수가 많은 경우
+      //기존 if문 사용 시 루프가 진행되지 않고 빠져나가는 현상이 발생. while 문으로 변경
       if (killedMonster < monsters.length) {
         while (true) {
           // 반복문을 사용해 유효한 입력이 들어올 때까지 계속 질문
@@ -144,19 +145,24 @@ class Game {
         }
       }
     }
+    //몬스터 리스트 모두 처치 시
     print('모든 몬스터를 물리쳤습니다! ${character.name}이 게임에서 승리했습니다.');
     print('게임을 저장하시겠습니까?(y/n)');
     String? action = stdin.readLineSync();
     if (action != null && (action == 'y' || action == 'Y')) {
-      saveResult('승리');
+      saveResult('승리'); //승리 결과값을 넘겨줌
     }
   }
 
+  //전투 매서드
   void battle(Monsters monster) {
+    //캐릭터와 몬스터 둘 다 체력이 0보다 클 때 지속됨
     while (character.health > 0 && monster.health > 0) {
+      //캐릭터와 몬스터 상태 출력
       character.showStatus();
       monster.showStatus();
 
+      //캐릭터의 행동 선택
       print('행동을 선택하세요 (1: 공격하기, 2: 방어하기)');
       String? action = stdin.readLineSync();
       if (action == '1') {
@@ -169,19 +175,25 @@ class Game {
         continue;
       }
 
+      //몬스터의 체력이 0보다 크고 캐릭터가 방어에 실패했을 때, 몬스터가 캐릭터를 공격
       if (monster.health > 0 && character.armorDefend == false) {
         monster.attackCharacter(character);
       }
 
+      //캐릭터의 체력이 0보다 작거나 같을 때, 게임 결과값을 패배로 저장
       if (character.health <= 0) {
         print('${character.name}이(가) 쓰러졌습니다.');
+        saveResult('패배');
         return;
       }
     }
   }
 
+  //게임 결과 저장 매서드
   void saveResult(String result) {
+    //result.txt 파일을 객체로 가져옴
     File resultFile = File('result.txt');
+    //result.txt 파일에 결과 값 저장
     resultFile.writeAsStringSync(
         '이름: ${character.name}, 체력: ${character.health}, 공격력: ${character.attackDamage}, 방어력: ${character.armor}, 몬스터 킬 수: $killedMonster, 결과: $result');
     print('게임 결과를 저장했습니다.');
