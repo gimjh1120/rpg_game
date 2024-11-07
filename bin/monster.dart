@@ -22,14 +22,15 @@ class Monsters {
           (attackDamage * (damagePercent / 100)).round(); //round를 사용하여 정수로 변환
       int maxDamage = max(damage, character.armor + 1);
       //max를 사용해 몬스터 공격력의 최소 값을 캐릭터 방어력 +1로 설정
-      character.health = max(
-          0, character.health - (maxDamage - character.armor)); //캐릭터에게 공격된 값 계산
-      print('${character.name}이(가) $name에게 $damage의 피해를 입었습니다.'); //상태 출력
+      int monsterDamage = maxDamage - character.armor;
+      character.health =
+          max(0, character.health - monsterDamage); //캐릭터에게 공격된 값 계산
+      print('${character.name}이(가) $name에게 $monsterDamage의 피해를 입었습니다.'); //상태 출력
     }
   }
 
   //캐릭터 현재 상태 출력
   void showStatus() {
-    print('$name 상태 - 체력: $health | 공격력: $attackDamage');
+    print('$name 상태 - 체력: $health | 공격력: $attackDamage\n');
   }
 }
