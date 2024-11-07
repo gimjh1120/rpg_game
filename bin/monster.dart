@@ -29,7 +29,7 @@ class Monsters {
     }
   }
 
-  //캐릭터 현재 상태 출력
+  //몬스터 현재 상태 출력
   void showStatus() {
     print('$name 상태 - 체력: $health | 공격력: $attackDamage\n');
   }

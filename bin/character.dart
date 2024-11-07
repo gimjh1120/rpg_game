@@ -61,6 +61,7 @@ class Characters {
     }
   }
 
+  //캐릭터 현재 상태 출력
   void showStatus() {
     print('\n$name 상태 - 체력: $health | 공격력: $attackDamage | 방어력: $armor');
   }
